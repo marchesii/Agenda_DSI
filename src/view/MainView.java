@@ -41,8 +41,9 @@ public class MainView extends JFrame {
 	 * Create the frame.
 	 */
 	public MainView() {
+		setTitle("Menu da agenda");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 656, 303);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,15 +55,16 @@ public class MainView extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{1.0, 0.0};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.gridwidth = 4;
-		gbc_textArea.insets = new Insets(0, 0, 5, 0);
-		gbc_textArea.fill = GridBagConstraints.VERTICAL;
-		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 0;
-		contentPane.add(textArea, gbc_textArea);
+		JTextArea txtAreaContatos = new JTextArea();
+		txtAreaContatos.setEnabled(false);
+		txtAreaContatos.setEditable(false);
+		GridBagConstraints gbc_txtAreaContatos = new GridBagConstraints();
+		gbc_txtAreaContatos.gridwidth = 4;
+		gbc_txtAreaContatos.insets = new Insets(0, 0, 5, 0);
+		gbc_txtAreaContatos.fill = GridBagConstraints.VERTICAL;
+		gbc_txtAreaContatos.gridx = 0;
+		gbc_txtAreaContatos.gridy = 0;
+		contentPane.add(txtAreaContatos, gbc_txtAreaContatos);
 		
 		JButton btnIncPessoa = new JButton("Incluir Pessoa");
 		GridBagConstraints gbc_btnIncPessoa = new GridBagConstraints();
