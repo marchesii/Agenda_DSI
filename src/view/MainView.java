@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Canvas;
 
 public class MainView extends JFrame {
 

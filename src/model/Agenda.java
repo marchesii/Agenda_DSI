@@ -79,7 +79,6 @@ public class Agenda implements ICoisa {
 	public String contatoBuscaNome(String parametro) {
 		String result = null;	
 		boolean achou = false;
-		//contatos.transforma(contato);
 		
 		for(int i = 0; i < contatos.size() && achou == false; i++) {
 			ICoisa c = contatos.get(i);
