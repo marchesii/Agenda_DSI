@@ -17,8 +17,15 @@ public class ContatoDAO {
 	public Conexao con = null;
 	
 	public static ContatoDAO instance = null;
+	
+	public static ContatoDAO getInstance() {
+		if(instance == null) {
+			instance = new ContatoDAO();
+		}
+		return instance;
+	}
 
-	public boolean createTable(String tabela) {
+	public boolean createTable() {
 		String sql;
 		con = Conexao.getInstance();
 		Connection dataSource = con.getConexao();
@@ -35,9 +42,9 @@ public class ContatoDAO {
 		sql  = "CREATE TABLE " 			  + Constantes.TABLE_NAME_CONTATO + "(";
 		sql += Constantes.COLUMN_ID 	  + " int(2) NOT NULL AUTO_INCREMENT PRIMARY KEY, ";
 		sql += Constantes.COLUMN_NOME 	  + " VARCHAR(20) NOT NULL, ";
-		sql += Constantes.COLUMN_TELEFONE + " VARCHAR(11) ";
-		sql += Constantes.COLUMN_USUARIO  + "int (2) NOT NULL );";
-
+		sql += Constantes.COLUMN_TELEFONE + " VARCHAR(11), ";
+		sql += Constantes.COLUMN_USUARIO  + " int (2) NOT NULL );";
+		
 		try {
 			PreparedStatement pstm = dataSource.prepareStatement(sql);
 			if (pstm.executeUpdate() == 0) {

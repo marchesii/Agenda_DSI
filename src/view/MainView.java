@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Usuario;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -21,15 +24,16 @@ import java.awt.Canvas;
 public class MainView extends JFrame {
 
 	private JPanel contentPane;
+	private Usuario user = null;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(Usuario user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainView frame = new MainView();
+					MainView frame = new MainView(user);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +45,8 @@ public class MainView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainView() {
+	public MainView(Usuario user) {
+		this.user = user;
 		setTitle("Menu da agenda");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

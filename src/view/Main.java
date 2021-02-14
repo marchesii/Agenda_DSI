@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JOptionPane;
 
+import dao.ContatoDAO;
 import model.Agenda;
 
 import model.Contato;
@@ -17,6 +18,7 @@ public class Main
   		String valor;
   		int op = 0;
   		
+  		
   		do {
   			valor = JOptionPane.showInputDialog(null, "Digite uma Opção \n" +
   					"\n 1- Incluir contato" +
@@ -28,6 +30,7 @@ public class Main
   					"\n 7- Sair");
   			try {
   				if(valor == null) {
+  					ContatoDAO.getInstance().createTable();
   					op = 7;
   				}else {
   					op = Integer.parseInt(valor);

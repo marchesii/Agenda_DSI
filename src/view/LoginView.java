@@ -6,14 +6,22 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import constantes.Constantes;
+import dao.UsuarioDAO;
+import model.Usuario;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 
 public class LoginView extends JFrame {
@@ -82,6 +90,12 @@ public class LoginView extends JFrame {
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Usuario user = UsuarioDAO.getInstance().consultaPorParamento(Integer.parseInt(textField.getText()), Integer.parseInt(String.valueOf(passwordField.getPassword())));
+					MainView.main(user);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, Constantes.ERROR_INPUT_LOGIN);
+				}
 			}
 		});
 		
@@ -103,6 +117,15 @@ public class LoginView extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				try{
+					Usuario user = new Usuario(Integer.parseInt(textField.getText()), Integer.parseInt(String.valueOf(passwordField.getPassword())));
+					UsuarioDAO.getInstance().salvarUsuario(user);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, Constantes.ERROR_INPUT_LOGIN);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
 		});
 		GridBagConstraints gbc_btnCadastrar = new GridBagConstraints();
