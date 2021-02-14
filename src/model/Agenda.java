@@ -22,11 +22,11 @@ public class Agenda implements ICoisa {
 		return result;
 	}
 	
-	public void adicionarTelefone(String nome, Telefone telefone) {
+	public void adicionarTelefone(String nome, String telefone) {
 		Contato contato = contatoBuscaNome(nome, 0);
 		if(contatos.contains(contato))
 		{
-			contato.addTelefone(telefone);
+			contato.setTelefone(telefone);
 		}
 	}
 	
@@ -40,22 +40,12 @@ public class Agenda implements ICoisa {
 		}
 	}
 	
-	public void alteraEmail(String nome) {
-		Contato contato;
-		contato = contatoBuscaNome(nome, 0);
-		if(contato != null) {
-			if(contatos.contains(contato)){
-				contato.setEmail(JOptionPane.showInputDialog("Qual o novo email desse contato?: "));
-			}
-		}
-	}
-	
-	public void alterarTelefone(String nome, Telefone telefone) {
+	public void alterarTelefone(String nome, String telefone) {
 		Contato contato;
 		contato = contatoBuscaNome(nome, 0);
 		if(contato != null) {
 			if(contatos.contains(contato)) {
-				contato.addTelefone(telefone);
+				contato.setTelefone(telefone);
 			}
 		}
 	}

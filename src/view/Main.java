@@ -12,9 +12,8 @@ public class Main
 {  
      public static void main(String[] args) {
     	Agenda a;
-        a=new Agenda();
+        a = new Agenda();
         String nome;
-  		String email;
   		String valor;
   		int op = 0;
   		
@@ -39,18 +38,7 @@ public class Main
   			}
   			switch(op) {
   			case 1:
-  				nome = JOptionPane.showInputDialog("Por favor insira o nome: ");
-  				email = JOptionPane.showInputDialog("Por favor insira o email: ");
-  				int querTelefone = JOptionPane.showConfirmDialog(null, "Você quer adicionar o telefone junto ao contato?", "Agenda", JOptionPane.YES_NO_OPTION);
-  				if(querTelefone == 0) {
-  					Contato novo;
-  					novo = new Contato(nome, email);
-  					a.adicionar(novo);
-  					novo.addTelefone(telefoneNovo());				
-  				}else {
-  					a.adicionar(new Contato(nome, email));	
-  				}
-  				break;
+  				//TODO INCLUIR ICONTATO
   			case 2:
   				nome = JOptionPane.showInputDialog("Insira o nome do contato a ser excluido: ");
   				if(nome == null)
@@ -73,7 +61,7 @@ public class Main
   				break;
   			case 5:
   				nome = JOptionPane.showInputDialog("Por favor insira o nome: ");
-  				Telefone telefone = telefoneNovo();
+  				String telefone = telefoneNovo();
   				a.adicionarTelefone(nome, telefone);
   				JOptionPane.showMessageDialog(null,  a.contatoBuscaNome(nome).toString());
   				break;
@@ -84,16 +72,6 @@ public class Main
   						a.alteraNome(nome);
   						JOptionPane.showMessageDialog(null, "Contato alterado com sucesso");
   						mostraTudo(a);
-  					}else {
-  						alteracao = JOptionPane.showConfirmDialog(null, "Deseja entao alterar o email?", "Agenda", JOptionPane.YES_NO_OPTION);
-  						if(alteracao == 0) {
-  							a.alteraEmail(nome);
-  							JOptionPane.showMessageDialog(null, "Contato alterado com sucesso");
-  						}else {
-  							telefone = telefoneNovo();
-  							a.alterarTelefone(nome, telefone);
-  							JOptionPane.showMessageDialog(null, "Contato alterado com sucesso");
-  						}
   					}
   					break;
   			default:
@@ -106,7 +84,7 @@ public class Main
     	 JOptionPane.showMessageDialog(null, agenda.toString());
      }
      
-     public static Telefone telefoneNovo() {
+     public static String telefoneNovo() {
     	int ddd = 0, prefixo = 0, sufixo = 0;
     	Telefone telefone = new Telefone(ddd, prefixo, sufixo);
     	String valor;
@@ -131,7 +109,7 @@ public class Main
 	 	}else {
 	 		telefone.setSufixo(0);
 	 	}
-		return telefone;
+		return telefone.toString();
      }
      
      private static boolean tryCatch(String valor) {

@@ -1,53 +1,46 @@
 package model;
 
 public class Contato implements ICoisa {
+	private int id;
 	private String nome;
-	private String email;
-	private ArrayConjunto telefones;
+	private String telefone;
+	private int usuario;
 	
-	public Contato(String nome, String email) {
-		this.nome = nome;
-		this.email = email;
-		telefones = new ArrayConjunto();
+	public Contato(int id, String nome, String telefone, int usuario) {
+		this.id       = id;
+		this.nome     = nome;
+		this.telefone = telefone;
+		this.usuario  = usuario;
 	}
 	
-	public Contato(String nome) {
-		this.nome = nome;
-		this.email = null;
-		telefones = new ArrayConjunto();
+	public int getUsuario() {
+		return usuario;
 	}
-	
-	
+
+	public void setUsuario(int usuario) {
+		this.usuario = usuario;
+	}
+
 	public String getNome() {
 		return this.nome;
-	}
-	
-	public String getEmail() {
-		return this.email;
-	}
-	
-	public String getTelefone() {
-		String result;
-		result = telefones.toString();
-		return result;
 	}
 	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public void setEmail(String email) {
-		this.email = email;
+
+	public String getTelefone() {
+		return telefone;
 	}
-	
-	public void addTelefone(Telefone telefone) {
-		telefones.add(telefone);
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
+
 	@Override
 	public String toString(){
 		return "Nome: " + this.nome + ","
-			   + "\nEmail: " + this.email + ","
-			   + "\nTelefones: \n" + telefones.toString();
+			   + "\nTelefones: \n" + telefone.toString();
 	}
 	
 }
