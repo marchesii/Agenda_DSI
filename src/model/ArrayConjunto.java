@@ -1,4 +1,4 @@
-package model;
+/*package model;
 
 public class ArrayConjunto implements IConjunto {
 	private ICoisa ArrayC[];
@@ -183,3 +183,4 @@ public class ArrayConjunto implements IConjunto {
 	}
 
 }
+*/

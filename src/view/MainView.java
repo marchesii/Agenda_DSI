@@ -24,7 +24,7 @@ import java.awt.Canvas;
 public class MainView extends JFrame {
 
 	private JPanel contentPane;
-	private Usuario user = null;
+	private Usuario user;
 
 	/**
 	 * Launch the application.

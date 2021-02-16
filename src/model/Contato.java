@@ -1,13 +1,11 @@
 package model;
 
-public class Contato implements ICoisa {
-	private int id;
+public class Contato {
 	private String nome;
 	private String telefone;
 	private int usuario;
 	
-	public Contato(int id, String nome, String telefone, int usuario) {
-		this.id       = id;
+	public Contato(String nome, String telefone, int usuario) {
 		this.nome     = nome;
 		this.telefone = telefone;
 		this.usuario  = usuario;

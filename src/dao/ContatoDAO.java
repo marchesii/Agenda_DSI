@@ -24,8 +24,9 @@ public class ContatoDAO {
 		}
 		return instance;
 	}
-
-	public boolean createTable() {
+	
+	public boolean dropTable() {
+		
 		String sql;
 		con = Conexao.getInstance();
 		Connection dataSource = con.getConexao();
@@ -34,16 +35,24 @@ public class ContatoDAO {
 			sql = "DROP TABLE contato";
 			PreparedStatement pstm = dataSource.prepareStatement(sql);
 			pstm.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, Constantes.TABLE_CONTATO_INEXIST);
 
 		}
+		
+		return false;
+	}
+
+	public boolean createTable() {
+		String sql;
+		con = Conexao.getInstance();
+		Connection dataSource = con.getConexao();
 
 		sql  = "CREATE TABLE " 			  + Constantes.TABLE_NAME_CONTATO + "(";
-		sql += Constantes.COLUMN_ID 	  + " int(2) NOT NULL AUTO_INCREMENT PRIMARY KEY, ";
-		sql += Constantes.COLUMN_NOME 	  + " VARCHAR(20) NOT NULL, ";
-		sql += Constantes.COLUMN_TELEFONE + " VARCHAR(11), ";
-		sql += Constantes.COLUMN_USUARIO  + " int (2) NOT NULL );";
+		sql += Constantes.COLUMN_NOME 	  + " VARCHAR(50) NOT NULL PRIMARY KEY, ";
+		sql += Constantes.COLUMN_TELEFONE + " VARCHAR(11) PRIMARY KEY, ";
+		sql += Constantes.COLUMN_USUARIO  + " int (10) NOT NULL FOREIGN KEY REFERENCES " + Constantes.TABLE_NAME_USUARIO + "(" + Constantes.COLUMN_LOGIN  + ")" + ");";
 		
 		try {
 			PreparedStatement pstm = dataSource.prepareStatement(sql);
@@ -96,7 +105,7 @@ public class ContatoDAO {
 		
 		while(rs.next()) {
 			
-			Contato c = new Contato(rs.getInt(Constantes.COLUMN_ID), rs.getString(Constantes.COLUMN_NOME), rs.getString(Constantes.COLUMN_TELEFONE), rs.getInt(Constantes.COLUMN_USUARIO));
+			Contato c = new Contato(rs.getString(Constantes.COLUMN_NOME), rs.getString(Constantes.COLUMN_TELEFONE), rs.getInt(Constantes.COLUMN_USUARIO));
 
 			listaContatos.add(c);
 		}

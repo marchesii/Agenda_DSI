@@ -12,8 +12,8 @@ public class Conexao {
 	private static Conexao conexao = null;
 	private static Connection dataSource = null;
 	private String url = "jdbc:mysql://localhost:3306/dsi";
-	private String usuario = "root";
-	private String senha = "";
+	private String usuario = "usuario";
+	private String senha = "usuario";
 	
 	private Conexao() {
 		

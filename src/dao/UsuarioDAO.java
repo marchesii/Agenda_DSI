@@ -91,7 +91,7 @@ public class UsuarioDAO {
 			}
 
 		} catch (SQLException e) {
-			createTable();
+			JOptionPane.showMessageDialog(null, Constantes.ERROR_USUARIO_SELECT);
 		}
 
 		return user;

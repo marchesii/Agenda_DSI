@@ -1,4 +1,4 @@
-package view;
+/*package view;
 
 import javax.swing.JOptionPane;
 
@@ -128,4 +128,4 @@ public class Main
     	 
     	 return deucerto;
      }
-}
+}*/

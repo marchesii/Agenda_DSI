@@ -9,6 +9,7 @@ public class Constantes {
 	public static final String ERROR_CONNECT_BANCO         = "Erro ao comunicar com o banco de dados";
 	public static final String ERROR_CONTATO_INSERT        = "Problema ao inserir um contato";
 	public static final String ERROR_CONTATO_DELETE        = "Problema ao deletar um contato";
+	public static final String ERROR_USUARIO_SELECT        = "Problema ao consultar um usuario";
 	public static final String ERROR_TABLE_CONTATO         = "Table 'dsi.contato' doesn't exist";
 	public static final String ERROR_CONTATO_EXIST         = "Contato ja existe";
 	public static final String ERROR_USUARIO_EXIST         = "Usuario ja existe";
@@ -35,7 +36,6 @@ public class Constantes {
 	public static final String TABLE_CREATE                = "Tabela Criada";
 	public static final String TABLE_NAME_CONTATO          = "contato";
 	public static final String TABLE_NAME_USUARIO          = "usuario";
-	public static final String COLUMN_ID                   = "id";
 	public static final String COLUMN_NOME                 = "nome";
 	public static final String COLUMN_TELEFONE             = "telefone";
 	public static final String COLUMN_USUARIO              = "user";

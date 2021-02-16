@@ -1,4 +1,4 @@
-package model;
+/*package model;
 
 import javax.swing.JOptionPane;
 
@@ -105,3 +105,4 @@ public class Agenda implements ICoisa {
 	
 	
 }
+*/

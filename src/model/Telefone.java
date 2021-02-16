@@ -1,6 +1,6 @@
 package model;
 
-public class Telefone implements ICoisa {
+public class Telefone {
 	private int ddd;
 	private int prefixo;
 	private int sufixo;
