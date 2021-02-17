@@ -6,14 +6,28 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+
+import constantes.Constantes;
+import dao.ContatoDAO;
+import dao.UsuarioDAO;
+import model.Contato;
+import model.Telefone;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.Window.Type;
 
@@ -21,31 +35,33 @@ public class PessoaView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfNome;
-	private JTextField tfEmail;
-	private JTextField tfPrefixo;
 	private JTextField tfDDD;
-	private JTextField tfSulfixo;
+	private static Contato contato = null;
+	
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static Contato main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PessoaView frame = new PessoaView();
+					PessoaView frame = new PessoaView(args);
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		return null;
 	}
 
 	/**
 	 * Create the frame.
+	 * @param args 
 	 */
-	public PessoaView() {
+	public PessoaView(String[] args) {
 		setTitle("Contato");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,24 +95,6 @@ public class PessoaView extends JFrame {
 		contentPane.add(tfNome, gbc_tfNome);
 		tfNome.setColumns(10);
 		
-		JLabel lblEmail = new JLabel("Email:");
-		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
-		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_lblEmail.anchor = GridBagConstraints.WEST;
-		gbc_lblEmail.gridx = 1;
-		gbc_lblEmail.gridy = 2;
-		contentPane.add(lblEmail, gbc_lblEmail);
-		
-		tfEmail = new JTextField();
-		GridBagConstraints gbc_tfEmail = new GridBagConstraints();
-		gbc_tfEmail.gridwidth = 7;
-		gbc_tfEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_tfEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tfEmail.gridx = 2;
-		gbc_tfEmail.gridy = 2;
-		contentPane.add(tfEmail, gbc_tfEmail);
-		tfEmail.setColumns(10);
-		
 		JLabel lblTelefone = new JLabel("Telefone:");
 		GridBagConstraints gbc_lblTelefone = new GridBagConstraints();
 		gbc_lblTelefone.insets = new Insets(0, 0, 5, 5);
@@ -105,8 +103,13 @@ public class PessoaView extends JFrame {
 		gbc_lblTelefone.gridy = 3;
 		contentPane.add(lblTelefone, gbc_lblTelefone);
 		
-		tfDDD = new JTextField();
+		try {
+			tfDDD = new JFormattedTextField(new DefaultFormatterFactory(new MaskFormatter("(##) ##### - ####")));
+		} catch (ParseException e2) {
+			JOptionPane.showMessageDialog(null, Constantes.ERROR_INPUT_TELEFONE);
+		}
 		GridBagConstraints gbc_tfDDD = new GridBagConstraints();
+		gbc_tfDDD.gridwidth = 7;
 		gbc_tfDDD.insets = new Insets(0, 0, 5, 5);
 		gbc_tfDDD.fill = GridBagConstraints.HORIZONTAL;
 		gbc_tfDDD.gridx = 2;
@@ -114,30 +117,24 @@ public class PessoaView extends JFrame {
 		contentPane.add(tfDDD, gbc_tfDDD);
 		tfDDD.setColumns(2);
 		
-		tfPrefixo = new JTextField();
-		GridBagConstraints gbc_tfPrefixo = new GridBagConstraints();
-		gbc_tfPrefixo.gridwidth = 3;
-		gbc_tfPrefixo.insets = new Insets(0, 0, 5, 5);
-		gbc_tfPrefixo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tfPrefixo.gridx = 3;
-		gbc_tfPrefixo.gridy = 3;
-		contentPane.add(tfPrefixo, gbc_tfPrefixo);
-		tfPrefixo.setColumns(9);
-		
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					contato = new Contato(tfNome.getText(), tfDDD.getText(), MainView.getUser());
+					if(args[0].equals("Alterar")) {
+						ContatoDAO.getInstance().alterarPessoa(contato, MainView.getUser());
+						JOptionPane.showMessageDialog(null, Constantes.TABLE_CONTATO_ALTER);
+					} else if(args[0].equals("Salvar")) {
+						ContatoDAO.getInstance().salvarPessoa(contato, MainView.getUser());	
+						JOptionPane.showMessageDialog(null, Constantes.TABLE_CONTATO_INSERT);
+					}
+					dispose();
+				} catch (Exception e1) {
+					return;
+				}
 			}
 		});
-		
-		tfSulfixo = new JTextField();
-		tfSulfixo.setColumns(9);
-		GridBagConstraints gbc_tfSulfixo = new GridBagConstraints();
-		gbc_tfSulfixo.insets = new Insets(0, 0, 5, 5);
-		gbc_tfSulfixo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tfSulfixo.gridx = 8;
-		gbc_tfSulfixo.gridy = 3;
-		contentPane.add(tfSulfixo, gbc_tfSulfixo);
 		GridBagConstraints gbc_btnConfirmar = new GridBagConstraints();
 		gbc_btnConfirmar.gridwidth = 5;
 		gbc_btnConfirmar.insets = new Insets(0, 0, 5, 5);
@@ -149,6 +146,7 @@ public class PessoaView extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
@@ -158,6 +156,28 @@ public class PessoaView extends JFrame {
 		gbc_btnCancelar.gridx = 2;
 		gbc_btnCancelar.gridy = 6;
 		contentPane.add(btnCancelar, gbc_btnCancelar);
+		
+		if(args[0].equals("Alterar")) {
+			tfNome.setText(contato.getNome());
+			tfDDD.setText(contato.getTelefone());
+		}
+	}
+
+	public static void main(String[] botao, Contato selectedValue) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					contato = selectedValue;
+					PessoaView frame = new PessoaView(botao);
+					frame.setVisible(true);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 	}
 
 }
