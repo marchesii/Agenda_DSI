@@ -13,6 +13,7 @@ public class Constantes {
 	public static final String ERROR_TABLE_CONTATO         = "Table 'dsi.contato' doesn't exist";
 	public static final String ERROR_CONTATO_EXIST         = "Contato ja existe";
 	public static final String ERROR_USUARIO_EXIST         = "Usuario ja existe";
+	public static final String ERROR_USUARIO_UPDATE_SENHA  = "Erro ao alterar senha";
 	public static final String ERROR_TABLE_CREATE          = "Tabela nao foi criada";
 	
 
@@ -30,6 +31,7 @@ public class Constantes {
 	public static final String TABLE_USUARIO_SUCESSO_SALVO = "Usuario salvo com sucesso";
 	public static final String TABLE_USUARIO_NOT_DELETE    = "Usuario nao existente na tabela";
 	public static final String TABLE_USUARIO_JA_CADASTRADA = "Nao existe esse Usuario cadastrado";
+	public static final String TABLE_USUARIO_SUCESSO_SENHA = "Senha alterada com sucesso";
 	
 	
 

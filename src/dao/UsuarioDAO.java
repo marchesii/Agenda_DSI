@@ -24,7 +24,7 @@ public class UsuarioDAO {
 		return instance;
 	}
 
-	public boolean createTable() {
+	public boolean createTable() throws SQLException {
 		String sql;
 		Connection dataSource = con.getConexao();
 
@@ -33,36 +33,37 @@ public class UsuarioDAO {
 		sql += Constantes.COLUMN_SENHA 	  + " int(6) NOT NULL );";
 		
 		try {
+			
 			PreparedStatement pstm = dataSource.prepareStatement(sql);
 			if (pstm.executeUpdate() == 0) {
 				JOptionPane.showMessageDialog(null, Constantes.TABLE_CREATE);
 				return true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new SQLException(Constantes.ERROR_TABLE_CREATE);
 		}
 		return false;
 	}
 	
-	public boolean dropTable() {
+	public boolean dropTable() throws SQLException {
 		String sql;
 		Connection dataSource = con.getConexao();
 
 		try {
+			
 			sql = "DROP TABLE usuario";
 			PreparedStatement pstm = dataSource.prepareStatement(sql);
 			pstm.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, Constantes.TABLE_USUARIO_INEXIST);
+			throw new SQLException(Constantes.TABLE_USUARIO_INEXIST);
 		}
-		return false;
 	}
 	
 	public void salvarUsuario(Usuario usuario) throws Exception{
 		con = Conexao.getInstance();
 	
-		if(!(consultaPorParamento(usuario.getLogin(), usuario.getSenha()) == null)){
+		if(!(consultaPorParamento(usuario.getLogin(), usuario.getSenha()) == null)) {
 			throw new Exception(Constantes.ERROR_USUARIO_EXIST);
 		}
 		
@@ -71,19 +72,38 @@ public class UsuarioDAO {
 		pstm.setInt(1, usuario.getLogin());
 		pstm.setInt(2, usuario.getSenha());
 		pstm.executeUpdate();
-}
+	}
+	
+	public boolean alterarSenha(int login, int novaSenha) throws SQLException {
 
-	public Usuario consultaPorParamento(int login, int senha){
+		String  sql  = "UPDATE " + Constantes.TABLE_NAME_USUARIO + " ";
+				sql += "SET " + Constantes.COLUMN_SENHA + " = (?) ";
+				sql += "WHERE " + Constantes.COLUMN_LOGIN + " = (?) ;";
+
+		try {
+			
+			PreparedStatement pstm = con.getConexao().prepareStatement(sql);
+			pstm.setInt(1, novaSenha);
+			pstm.setInt(2, login);
+			pstm.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			throw new SQLException(Constantes.ERROR_USUARIO_UPDATE_SENHA);
+		}
+	}
+
+	public Usuario consultaPorParamento(int login, int senha) throws SQLException {
 		Usuario user = null;
 
 		String  sql  = "SELECT * FROM " + Constantes.TABLE_NAME_USUARIO + " ";
-				sql += "WHERE " + Constantes.COLUMN_LOGIN + " = " + login;
-				sql += " AND " + Constantes.COLUMN_SENHA + " = " + senha + " ;";
+				sql += "WHERE " + Constantes.COLUMN_LOGIN + " = (?) ";
+				sql += " AND " + Constantes.COLUMN_SENHA + " = (?) ;";
 
-		PreparedStatement pstm;
 		try {
-
-			pstm = con.getConexao().prepareStatement(sql);
+			
+			PreparedStatement pstm = con.getConexao().prepareStatement(sql);
+			pstm.setInt(1, login);
+			pstm.setInt(2, senha);
 			ResultSet rs = pstm.executeQuery();
 
 			while (rs.next()) {
@@ -91,7 +111,7 @@ public class UsuarioDAO {
 			}
 
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, Constantes.ERROR_USUARIO_SELECT);
+			throw new SQLException(Constantes.ERROR_USUARIO_SELECT);
 		}
 
 		return user;
